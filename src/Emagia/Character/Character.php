@@ -6,13 +6,13 @@
  * Time: 20:58
  */
 
-namespace Emagia\Hero;
+namespace Emagia\Character;
 
 /**
- * Class Hero
- * @package Emagia\Hero
+ * Class Character
+ * @package Emagia\Character
  */
-class Hero
+class Character
 {
     /** @var int */
     protected $health;
@@ -24,8 +24,6 @@ class Hero
     protected $speed;
     /** @var int */
     protected $luck;
-    /** @var array */
-    protected $skills;
 
     /**
      * @return int
@@ -37,9 +35,9 @@ class Hero
 
     /**
      * @param int $health
-     * @return Hero
+     * @return Character
      */
-    public function setHealth(int $health): Hero
+    public function setHealth(int $health): Character
     {
         $this->health = $health;
         return $this;
@@ -55,9 +53,9 @@ class Hero
 
     /**
      * @param int $strength
-     * @return Hero
+     * @return Character
      */
-    public function setStrength(int $strength): Hero
+    public function setStrength(int $strength): Character
     {
         $this->strength = $strength;
         return $this;
@@ -73,9 +71,9 @@ class Hero
 
     /**
      * @param int $defense
-     * @return Hero
+     * @return Character
      */
-    public function setDefense(int $defense): Hero
+    public function setDefense(int $defense): Character
     {
         $this->defense = $defense;
         return $this;
@@ -91,9 +89,9 @@ class Hero
 
     /**
      * @param int $speed
-     * @return Hero
+     * @return Character
      */
-    public function setSpeed(int $speed): Hero
+    public function setSpeed(int $speed): Character
     {
         $this->speed = $speed;
         return $this;
@@ -109,29 +107,11 @@ class Hero
 
     /**
      * @param int $luck
-     * @return Hero
+     * @return Character
      */
-    public function setLuck(int $luck): Hero
+    public function setLuck(int $luck): Character
     {
         $this->luck = $luck;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSkills(): array
-    {
-        return $this->skills;
-    }
-
-    /**
-     * @param array $skills
-     * @return Hero
-     */
-    public function setSkills(array $skills): Hero
-    {
-        $this->skills = $skills;
         return $this;
     }
 }
