@@ -8,6 +8,10 @@
 
 namespace Emagia\Hero;
 
+/**
+ * Class Hero
+ * @package Emagia\Hero
+ */
 class Hero
 {
     /** @var int */
@@ -20,6 +24,8 @@ class Hero
     protected $speed;
     /** @var int */
     protected $luck;
+    /** @var array */
+    protected $skills;
 
     /**
      * @return int
@@ -108,6 +114,24 @@ class Hero
     public function setLuck(int $luck): Hero
     {
         $this->luck = $luck;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSkills(): array
+    {
+        return $this->skills;
+    }
+
+    /**
+     * @param array $skills
+     * @return Hero
+     */
+    public function setSkills(array $skills): Hero
+    {
+        $this->skills = $skills;
         return $this;
     }
 }
