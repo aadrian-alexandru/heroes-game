@@ -12,6 +12,10 @@ namespace Emagia\Character;
  * Class Character
  * @package Emagia\Character
  */
+/**
+ * Class Character
+ * @package Emagia\Character
+ */
 class Character
 {
     /** @var int */
@@ -24,6 +28,23 @@ class Character
     protected $speed;
     /** @var int */
     protected $luck;
+
+    /**
+     * Character constructor.
+     * @param int $health
+     * @param int $strength
+     * @param int $defense
+     * @param int $speed
+     * @param int $luck
+     */
+    public function __construct(int $health, int $strength, int $defense, int $speed, int $luck)
+    {
+        $this->health = $health;
+        $this->strength = $strength;
+        $this->defense = $defense;
+        $this->speed = $speed;
+        $this->luck = $luck;
+    }
 
     /**
      * @return int

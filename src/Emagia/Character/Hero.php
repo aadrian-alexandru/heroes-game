@@ -40,9 +40,9 @@ class Hero extends Character
 
     /**
      * @param AbstractSkill $skill
-     * @return Character
+     * @return Hero
      */
-    public function addSkill(AbstractSkill $skill): Character
+    public function addSkill(AbstractSkill $skill): Hero
     {
         $this->skills[] = $skill;
         return $this;
