@@ -16,10 +16,25 @@ use PHPUnit\Framework\TestCase;
  */
 class CharacterTest extends TestCase
 {
+    /** @var Character */
+    private $character;
+
+    public function setUp()
+    {
+        $this->character = new Character(10, 20, 30, 40, 50);
+    }
+
+    public function testGetHealth()
+    {
+        $character = $this->character;
+        self::assertEquals(10, $character->getHealth());
+    }
+
     public function testSetHealth()
     {
-        $hero = new Character();
-        $hero->setHealth(20);
-        self::assertEquals(20, $hero->getHealth());
+        $character = $this->character;
+        self::assertEquals(10, $character->getHealth());
+        $character->setHealth(40);
+        self::assertEquals(40, $character->getHealth());
     }
 }
