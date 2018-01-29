@@ -10,6 +10,10 @@ namespace tests\Emagia\Hero;
 use Emagia\Hero\Hero;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class HeroTest
+ * @package tests\Emagia\Hero
+ */
 class HeroTest extends TestCase
 {
     public function testSetHealth()
