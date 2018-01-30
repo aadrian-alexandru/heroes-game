@@ -7,6 +7,7 @@
  */
 
 namespace Emagia\Character\Skills;
+use Emagia\Character\Character;
 
 /**
  * Class MagicShieldSkill
@@ -18,5 +19,18 @@ namespace Emagia\Character\Skills;
  */
 class MagicShieldSkill extends AbstractSkill
 {
+    /** @var string */
+    protected $type = self::TYPE_DEFENSE;
 
+    /**
+     * @param Character $attacker
+     * @param Character $defender
+     */
+    public function apply(Character &$attacker, Character &$defender)
+    {
+        $damage = $attacker->getStrength() - $defender->getDefense();
+        $damage = $damage / 2;
+        $defenderHealth = $defender->getHealth() - $damage;
+        $defender->setHealth($defenderHealth);
+    }
 }

@@ -55,8 +55,8 @@ class Gameplay
         $luck = array_rand(self::HERO_LUCK_RANGE);
         $this->hero = new Hero($health, $strength, $defense, $speed, $luck);
         $this->hero
-            ->addSkill(new RapidStrikeSkill())
-            ->addSkill(new MagicShieldSkill());
+            ->addSkill(new RapidStrikeSkill(10))
+            ->addSkill(new MagicShieldSkill(20));
 
         return $this;
     }

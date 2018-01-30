@@ -7,6 +7,7 @@
  */
 
 namespace Emagia\Character\Skills;
+use Emagia\Character\Character;
 
 /**
  * Class RapidStrikeSkill
@@ -18,5 +19,19 @@ namespace Emagia\Character\Skills;
  */
 class RapidStrikeSkill extends AbstractSkill
 {
+    /** @var string */
+    protected $type = self::TYPE_ATTACK;
 
+    /**
+     * @param Character $attacker
+     * @param Character $defender
+     */
+    public function apply(Character &$attacker, Character &$defender)
+    {
+        for ($strike = 0; $strike < 2; $strike++) {
+            $damage = $attacker->getStrength() - $defender->getDefense();
+            $defenderHealth = $defender->getHealth() - $damage;
+            $defender->setHealth($defenderHealth);
+        }
+    }
 }

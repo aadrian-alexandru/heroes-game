@@ -30,9 +30,9 @@ class Hero extends Character
 
     /**
      * @param array $skills
-     * @return Character
+     * @return Hero
      */
-    public function setSkills(array $skills): Character
+    public function setSkills(array $skills): Hero
     {
         $this->skills = $skills;
         return $this;
@@ -44,7 +44,10 @@ class Hero extends Character
      */
     public function addSkill(AbstractSkill $skill): Hero
     {
-        $this->skills[] = $skill;
+        if (!$this->hasSkill($skill)) {
+            $this->skills[] = $skill;
+        }
+
         return $this;
     }
 
