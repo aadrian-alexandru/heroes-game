@@ -33,4 +33,7 @@ final class GameSettings
 
     const HERO_RAPID_STRIKE_SKILL_CHANCE = 10;
     const HERO_MAGIC_SHIELD_SKILL_CHANCE = 20;
+
+    const WHO_STARTS_HERO = 0;
+    const WHO_STARTS_WILDBEAST = 1;
 }

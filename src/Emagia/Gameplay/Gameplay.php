@@ -28,16 +28,43 @@ class Gameplay
     private $whoStarts;
 
     /**
-     *
+     * Initialize Gameplay
      */
     public function initialize()
     {
-        $this->createHero()->createWildBeast();
+        $this->createHero()
+            ->createWildBeast()
+            ->computeWhoStarts();
 
         echo 'HERO Stats:' . PHP_EOL;
         echo 'Health: ' . $this->hero->getHealth() . PHP_EOL;
     }
 
+    /**
+     * Compute who starts
+     *
+     * If no condition below applies, a random character will be chosen to start
+     */
+    private function computeWhoStarts()
+    {
+        $whoStarts = mt_rand(GameSettings::WHO_STARTS_HERO, GameSettings::WHO_STARTS_WILDBEAST);
+
+        if ($this->hero->getSpeed() > $this->wildBeast->getSpeed()) {
+            $whoStarts = GameSettings::WHO_STARTS_HERO;
+        } elseif ($this->hero->getSpeed() < $this->wildBeast->getSpeed()) {
+            $whoStarts = GameSettings::WHO_STARTS_WILDBEAST;
+        } elseif ($this->hero->getLuck() > $this->wildBeast->getLuck()) {
+            $whoStarts = GameSettings::WHO_STARTS_HERO;
+        } elseif ($this->hero->getLuck() < $this->wildBeast->getLuck()) {
+            $whoStarts = GameSettings::WHO_STARTS_HERO;
+        }
+
+        $this->whoStarts = $whoStarts;
+    }
+
+    /**
+     *
+     */
     public function startBattle()
     {
 
