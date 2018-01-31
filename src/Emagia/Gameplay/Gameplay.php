@@ -11,6 +11,7 @@ use Emagia\Character\Hero;
 use Emagia\Character\Skills\MagicShieldSkill;
 use Emagia\Character\Skills\RapidStrikeSkill;
 use Emagia\Character\WildBeast;
+use Emagia\GameSettings;
 
 /**
  * Class Gameplay
@@ -18,18 +19,6 @@ use Emagia\Character\WildBeast;
  */
 class Gameplay
 {
-    const HERO_HEALTH_RANGE = array(70, 100);
-    const HERO_STRENGTH_RANGE = array(70, 80);
-    const HERO_DEFENSE_RANGE = array(45, 55);
-    const HERO_SPEED_RANGE = array(40, 50);
-    const HERO_LUCK_RANGE = array(10, 30);
-
-    const WILDBEAST_HEALTH_RANGE = array(60, 90);
-    const WILDBEAST_STRENGTH_RANGE = array(60, 90);
-    const WILDBEAST_DEFENSE_RANGE = array(40, 60);
-    const WILDBEAST_SPEED_RANGE = array(40, 60);
-    const WILDBEAST_LUCK_RANGE = array(25, 40);
-
     /** @var Hero */
     protected $hero;
     /** @var WildBeast */
@@ -48,15 +37,15 @@ class Gameplay
      */
     private function createHero(): Gameplay
     {
-        $health = array_rand(self::HERO_HEALTH_RANGE);
-        $strength = array_rand(self::HERO_STRENGTH_RANGE);
-        $defense = array_rand(self::HERO_DEFENSE_RANGE);
-        $speed = array_rand(self::HERO_SPEED_RANGE);
-        $luck = array_rand(self::HERO_LUCK_RANGE);
+        $health = array_rand(GameSettings::HERO_HEALTH_RANGE);
+        $strength = array_rand(GameSettings::HERO_STRENGTH_RANGE);
+        $defense = array_rand(GameSettings::HERO_DEFENSE_RANGE);
+        $speed = array_rand(GameSettings::HERO_SPEED_RANGE);
+        $luck = array_rand(GameSettings::HERO_LUCK_RANGE);
         $this->hero = new Hero($health, $strength, $defense, $speed, $luck);
         $this->hero
-            ->addSkill(new RapidStrikeSkill(10))
-            ->addSkill(new MagicShieldSkill(20));
+            ->addSkill(new RapidStrikeSkill(GameSettings::HERO_RAPID_STRIKE_SKILL_CHANCE))
+            ->addSkill(new MagicShieldSkill(GameSettings::HERO_MAGIC_SHIELD_SKILL_CHANCE));
 
         return $this;
     }
@@ -66,11 +55,11 @@ class Gameplay
      */
     private function createWildBeast(): Gameplay
     {
-        $health = array_rand(self::WILDBEAST_HEALTH_RANGE);
-        $strength = array_rand(self::WILDBEAST_STRENGTH_RANGE);
-        $defense = array_rand(self::WILDBEAST_DEFENSE_RANGE);
-        $speed = array_rand(self::WILDBEAST_SPEED_RANGE);
-        $luck = array_rand(self::WILDBEAST_LUCK_RANGE);
+        $health = array_rand(GameSettings::WILDBEAST_HEALTH_RANGE);
+        $strength = array_rand(GameSettings::WILDBEAST_STRENGTH_RANGE);
+        $defense = array_rand(GameSettings::WILDBEAST_DEFENSE_RANGE);
+        $speed = array_rand(GameSettings::WILDBEAST_SPEED_RANGE);
+        $luck = array_rand(GameSettings::WILDBEAST_LUCK_RANGE);
         $this->wildBeast = new WildBeast($health, $strength, $defense, $speed, $luck);
 
         return $this;
