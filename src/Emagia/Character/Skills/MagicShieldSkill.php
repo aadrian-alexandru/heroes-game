@@ -23,6 +23,15 @@ class MagicShieldSkill extends AbstractSkill
     protected $type = self::TYPE_DEFENSE;
 
     /**
+     * MagicShieldSkill constructor.
+     * @param int $chanceToUse
+     */
+    public function __construct(int $chanceToUse)
+    {
+        parent::__construct($chanceToUse);
+    }
+
+    /**
      * @param Character $attacker
      * @param Character $defender
      */

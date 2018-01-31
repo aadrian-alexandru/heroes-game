@@ -23,6 +23,16 @@ class RapidStrikeSkill extends AbstractSkill
     protected $type = self::TYPE_ATTACK;
 
     /**
+     * RapidStrikeSkill constructor.
+     * @param int $chanceToUse
+     */
+    public function __construct(int $chanceToUse)
+    {
+        parent::__construct($chanceToUse);
+    }
+
+
+    /**
      * @param Character $attacker
      * @param Character $defender
      */

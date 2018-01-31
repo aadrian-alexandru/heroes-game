@@ -18,7 +18,7 @@ use Emagia\Character\Skills\AbstractSkill;
 class Hero extends Character
 {
     /** @var array */
-    protected $skills;
+    protected $skills = array();
 
     /**
      * @return array
