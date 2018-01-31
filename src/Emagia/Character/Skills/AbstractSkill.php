@@ -19,6 +19,7 @@ class AbstractSkill
 
     /** @var string */
     protected $type;
+
     /** @var int */
     protected $chanceToUse;
 
@@ -32,11 +33,11 @@ class AbstractSkill
     }
 
     /**
-     * @param string $type
+     * @return string
      */
-    public function setType(string $type)
+    public function getType(): string
     {
-        $this->type = $type;
+        return $this->type;
     }
 
     /**
@@ -57,6 +58,6 @@ class AbstractSkill
      */
     protected function wiillApply(): bool
     {
-        return rand(0, 99) < $this->getChanceToUse();
+        return mt_rand(0, 99) < $this->getChanceToUse();
     }
 }

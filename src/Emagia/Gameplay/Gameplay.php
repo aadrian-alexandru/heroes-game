@@ -8,7 +8,9 @@
 
 namespace Emagia\Gameplay;
 
+use Emagia\Character\Character;
 use Emagia\Character\Hero;
+use Emagia\Character\Skills\AbstractSkill;
 use Emagia\Character\Skills\MagicShieldSkill;
 use Emagia\Character\Skills\RapidStrikeSkill;
 use Emagia\Character\WildBeast;
@@ -25,7 +27,17 @@ class Gameplay
     /** @var WildBeast */
     protected $wildBeast;
     /** @var int */
-    private $whoStarts;
+    private $whoAttacks;
+    /** @var Character */
+    private $winner;
+
+    /**
+     * @return Character
+     */
+    public function getWinner(): Character
+    {
+        return $this->winner;
+    }
 
     /**
      * Initialize Gameplay
@@ -59,7 +71,7 @@ class Gameplay
             $whoStarts = GameSettings::WHO_STARTS_HERO;
         }
 
-        $this->whoStarts = $whoStarts;
+        $this->whoAttacks = $whoStarts;
     }
 
     /**
@@ -67,7 +79,113 @@ class Gameplay
      */
     public function startBattle()
     {
+        while ($this->areBothCharactersAlive()) {
+            if ($this->isHeroAttacks()) {
+                $this->runHeroAttacks();
+                $this->whoAttacks = GameSettings::WHO_STARTS_WILDBEAST;
+            } else {
+                $this->runWildBeastAttacks();
+                $this->whoAttacks = GameSettings::WHO_STARTS_HERO;
+            }
+        }
 
+        $this->endBattle();
+    }
+
+    /**
+     *
+     */
+    private function endBattle()
+    {
+        $this->computeWinner();
+    }
+
+    /**
+     * @return Gameplay
+     */
+    private function computeWinner(): Gameplay
+    {
+        if ($this->hero->getHealth() > $this->wildBeast->getHealth()) {
+            $this->winner = $this->hero;
+        } else {
+            $this->winner = $this->wildBeast;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    private function runHeroAttacks()
+    {
+        $damage = $this->wildBeast->getHealth() - 10;
+        $this->wildBeast->setHealth($damage);
+
+        $this->logAttack($damage, 'Wild beast');
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    private function runWildBeastAttacks()
+    {
+        $damage = $this->hero->getHealth() - 5;
+        $this->hero->setHealth($damage);
+
+        $this->logAttack($damage, 'Oderus');
+        return true;
+    }
+
+    /**
+     * @param $damage
+     * @param $defender
+     */
+    private function logAttack($damage, $defender)
+    {
+        echo $defender . ' took ' . $damage . ' damage!' . PHP_EOL;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isHeroAttacks(): bool
+    {
+        if ($this->whoAttacks == GameSettings::WHO_STARTS_HERO) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return array
+     */
+    private function extractHeroAttackSkills(): array
+    {
+        $skills = array();
+
+        /** @var AbstractSkill $skill */
+        foreach ($this->hero->getSkills() as $skill) {
+            if ($skill->getType() == AbstractSkill::TYPE_ATTACK) {
+                $skills[] = $skill;
+            }
+        }
+
+        return $skills;
+    }
+
+    /**
+     * @return bool
+     */
+    private function areBothCharactersAlive(): bool
+    {
+        if ($this->hero->getHealth() > 0 && $this->wildBeast->getHealth() > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -82,8 +200,13 @@ class Gameplay
         $luck = mt_rand(GameSettings::HERO_LUCK_RANGE[0], GameSettings::HERO_LUCK_RANGE[1]);
         $this->hero = new Hero($health, $strength, $defense, $speed, $luck);
         $this->hero
-            ->addSkill(new RapidStrikeSkill(GameSettings::HERO_RAPID_STRIKE_SKILL_CHANCE))
-            ->addSkill(new MagicShieldSkill(GameSettings::HERO_MAGIC_SHIELD_SKILL_CHANCE));
+            ->setName(GameSettings::HERO_NAME);
+
+        foreach (GameSettings::HERO_SKILLS as $skillName => $chance) {
+            $className = "Emagia\\Character\\Skills\\" . $skillName;
+            $this->hero
+                ->addSkill(new $className($chance));
+        }
 
         return $this;
     }
@@ -99,6 +222,8 @@ class Gameplay
         $speed = mt_rand(GameSettings::WILDBEAST_SPEED_RANGE[0], GameSettings::WILDBEAST_SPEED_RANGE[1]);
         $luck = mt_rand(GameSettings::WILDBEAST_LUCK_RANGE[0], GameSettings::WILDBEAST_LUCK_RANGE[1]);
         $this->wildBeast = new WildBeast($health, $strength, $defense, $speed, $luck);
+        $this->wildBeast
+            ->setName(GameSettings::WILDBEAST_NAME);
 
         return $this;
     }

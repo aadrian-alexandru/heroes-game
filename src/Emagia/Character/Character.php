@@ -18,6 +18,8 @@ namespace Emagia\Character;
  */
 class Character
 {
+    /** @var string */
+    protected $name;
     /** @var int */
     protected $health;
     /** @var int */
@@ -44,6 +46,24 @@ class Character
         $this->defense = $defense;
         $this->speed = $speed;
         $this->luck = $luck;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return Character
+     */
+    public function setName(string $name): Character
+    {
+        $this->name = $name;
+        return $this;
     }
 
     /**
