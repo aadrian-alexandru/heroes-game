@@ -33,19 +33,11 @@ class Character
 
     /**
      * Character constructor.
-     * @param int $health
-     * @param int $strength
-     * @param int $defense
-     * @param int $speed
-     * @param int $luck
+     * @param string $name
      */
-    public function __construct(int $health, int $strength, int $defense, int $speed, int $luck)
+    public function __construct(string $name)
     {
-        $this->health = $health;
-        $this->strength = $strength;
-        $this->defense = $defense;
-        $this->speed = $speed;
-        $this->luck = $luck;
+        $this->name = $name;
     }
 
     /**
@@ -54,16 +46,6 @@ class Character
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return Character
-     */
-    public function setName(string $name): Character
-    {
-        $this->name = $name;
-        return $this;
     }
 
     /**

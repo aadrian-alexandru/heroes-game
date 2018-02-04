@@ -16,12 +16,19 @@ use PHPUnit\Framework\TestCase;
  */
 class CharacterTest extends TestCase
 {
+    const HERO_NAME = 'OrderusTest';
     /** @var Character */
     private $character;
 
     public function setUp()
     {
-        $this->character = new Character(10, 20, 30, 40, 50);
+        $this->character = new Character(self::HERO_NAME);
+        $this->character
+            ->setHealth(10)
+            ->setStrength(20)
+            ->setDefense(30)
+            ->setSpeed(40)
+            ->setLuck(50);
     }
 
     public function testGetHealth()

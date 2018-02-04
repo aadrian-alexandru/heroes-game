@@ -198,9 +198,13 @@ class Gameplay
         $defense = mt_rand(GameSettings::HERO_DEFENSE_RANGE[0], GameSettings::HERO_DEFENSE_RANGE[1]);
         $speed = mt_rand(GameSettings::HERO_SPEED_RANGE[0], GameSettings::HERO_SPEED_RANGE[1]);
         $luck = mt_rand(GameSettings::HERO_LUCK_RANGE[0], GameSettings::HERO_LUCK_RANGE[1]);
-        $this->hero = new Hero($health, $strength, $defense, $speed, $luck);
+        $this->hero = new Hero(GameSettings::HERO_NAME);
         $this->hero
-            ->setName(GameSettings::HERO_NAME);
+            ->setHealth($health)
+            ->setStrength($strength)
+            ->setDefense($defense)
+            ->setSpeed($speed)
+            ->setLuck($luck);
 
         foreach (GameSettings::HERO_SKILLS as $skillName => $chance) {
             $className = "Emagia\\Character\\Skills\\" . $skillName;
@@ -221,9 +225,13 @@ class Gameplay
         $defense = mt_rand(GameSettings::WILDBEAST_DEFENSE_RANGE[0], GameSettings::WILDBEAST_DEFENSE_RANGE[1]);
         $speed = mt_rand(GameSettings::WILDBEAST_SPEED_RANGE[0], GameSettings::WILDBEAST_SPEED_RANGE[1]);
         $luck = mt_rand(GameSettings::WILDBEAST_LUCK_RANGE[0], GameSettings::WILDBEAST_LUCK_RANGE[1]);
-        $this->wildBeast = new WildBeast($health, $strength, $defense, $speed, $luck);
+        $this->wildBeast = new WildBeast(GameSettings::WILDBEAST_NAME);
         $this->wildBeast
-            ->setName(GameSettings::WILDBEAST_NAME);
+            ->setHealth($health)
+            ->setStrength($strength)
+            ->setDefense($defense)
+            ->setSpeed($speed)
+            ->setLuck($luck);
 
         return $this;
     }
