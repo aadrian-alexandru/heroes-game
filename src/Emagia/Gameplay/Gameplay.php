@@ -100,6 +100,8 @@ class Gameplay
     private function endBattle()
     {
         $this->computeAndSetWinner();
+        echo '------------------------------------------------' . PHP_EOL;
+        echo 'THE WINNER IS ' . $this->winner->getName() . '!';
     }
 
     /**
