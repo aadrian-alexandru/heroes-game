@@ -11,8 +11,6 @@ namespace Emagia\Gameplay;
 use Emagia\Character\Character;
 use Emagia\Character\Hero;
 use Emagia\Character\Skills\AbstractSkill;
-use Emagia\Character\Skills\MagicShieldSkill;
-use Emagia\Character\Skills\RapidStrikeSkill;
 use Emagia\Character\WildBeast;
 use Emagia\GameSettings;
 
@@ -75,35 +73,41 @@ class Gameplay
     }
 
     /**
-     *
+     * Start battle
      */
     public function startBattle()
     {
-        while ($this->areBothCharactersAlive()) {
-            if ($this->isHeroAttacks()) {
-                $this->runHeroAttacks();
-                $this->whoAttacks = GameSettings::WHO_STARTS_WILDBEAST;
-            } else {
-                $this->runWildBeastAttacks();
-                $this->whoAttacks = GameSettings::WHO_STARTS_HERO;
+        try {
+            while ($this->areBothCharactersAlive()) {
+                if ($this->isHerosTurn()) {
+                    $this->runHeroAttacks();
+                    $this->whoAttacks = GameSettings::WHO_STARTS_WILDBEAST;
+                } else {
+                    $this->runWildBeastAttacks();
+                    $this->whoAttacks = GameSettings::WHO_STARTS_HERO;
+                }
             }
-        }
 
-        $this->endBattle();
+            $this->endBattle();
+        } catch (\Exception $e) {
+            // @todo: treat exception here (maybe log the errors)
+        }
     }
 
     /**
-     *
+     * End battle
      */
     private function endBattle()
     {
-        $this->computeWinner();
+        $this->computeAndSetWinner();
     }
 
     /**
+     * Compute and set winner
+     *
      * @return Gameplay
      */
-    private function computeWinner(): Gameplay
+    private function computeAndSetWinner(): Gameplay
     {
         if ($this->hero->getHealth() > $this->wildBeast->getHealth()) {
             $this->winner = $this->hero;
@@ -115,42 +119,75 @@ class Gameplay
     }
 
     /**
-     * @return bool
+     * Run Hero Attacks
+     *
+     * @throws \Exception
      */
     private function runHeroAttacks()
     {
-        $damage = $this->wildBeast->getHealth() - 10;
-        $this->wildBeast->setHealth($damage);
+        $damage = $this->calculateDamage($this->hero, $this->wildBeast);
+        $attackSkills = $this->extractHeroSkillsByType(AbstractSkill::TYPE_ATTACK);
 
-        $this->logAttack($damage, 'Wild beast');
-        return true;
+        foreach ($attackSkills as $skill) {
+            if ($skill instanceof AbstractSkill) {
+                $skill->apply($damage);
+            }
+        }
+
+        $this->wildBeast->setHealth($damage);
+        $this->logAttack($damage, $this->wildBeast->getName());
     }
 
+
     /**
-     * @return bool
+     * Run Wild Beast Attacks
+     *
+     * @throws \Exception
      */
     private function runWildBeastAttacks()
     {
-        $damage = $this->hero->getHealth() - 5;
+        $damage = $this->calculateDamage($this->wildBeast, $this->hero);
+        $defenseSkills = $this->extractHeroSkillsByType(AbstractSkill::TYPE_DEFENSE);
+
+        foreach ($defenseSkills as $skill) {
+            if ($skill instanceof AbstractSkill) {
+                $skill->apply($damage);
+            }
+        }
+
         $this->hero->setHealth($damage);
-
-        $this->logAttack($damage, 'Oderus');
-        return true;
+        $this->logAttack($damage, $this->hero->getName());
     }
 
     /**
-     * @param $damage
-     * @param $defender
+     * Calculate damage
+     *
+     * @param Character $attacker
+     * @param Character $defender
+     * @return int
      */
-    private function logAttack($damage, $defender)
+    private function calculateDamage(Character $attacker, Character $defender): int
     {
-        echo $defender . ' took ' . $damage . ' damage!' . PHP_EOL;
+        return ($attacker->getStrength() - $defender->getDefense());
     }
 
     /**
+     * Log attack
+     *
+     * @param int $damage
+     * @param string $defenderName
+     */
+    private function logAttack(int $damage, $defenderName)
+    {
+        echo $defenderName . ' took ' . $damage . ' damage!' . PHP_EOL;
+    }
+
+    /**
+     * Is Hero's turn
+     *
      * @return bool
      */
-    private function isHeroAttacks(): bool
+    private function isHerosTurn(): bool
     {
         if ($this->whoAttacks == GameSettings::WHO_STARTS_HERO) {
             return true;
@@ -160,15 +197,27 @@ class Gameplay
     }
 
     /**
+     * Extract Hero skills by type
+     *
+     * @param string $type
+     * @throws \Exception
      * @return array
      */
-    private function extractHeroAttackSkills(): array
+    private function extractHeroSkillsByType(string $type): array
     {
-        $skills = array();
+        if (empty($type)) {
+            throw new \Exception('No skill type provided!');
+        }
+
+        if ($type !== AbstractSkill::TYPE_ATTACK && $type !== AbstractSkill::TYPE_DEFENSE) {
+            throw new \Exception('Wrong type provided!');
+        }
+
+        $skills = [];
 
         /** @var AbstractSkill $skill */
         foreach ($this->hero->getSkills() as $skill) {
-            if ($skill->getType() == AbstractSkill::TYPE_ATTACK) {
+            if ($skill->getType() == $type) {
                 $skills[] = $skill;
             }
         }
@@ -177,6 +226,8 @@ class Gameplay
     }
 
     /**
+     * Are both characters alive
+     *
      * @return bool
      */
     private function areBothCharactersAlive(): bool
@@ -189,6 +240,8 @@ class Gameplay
     }
 
     /**
+     * Create Hero
+     *
      * @return Gameplay
      */
     private function createHero(): Gameplay
@@ -216,6 +269,8 @@ class Gameplay
     }
 
     /**
+     * Create Wild Beast
+     *
      * @return Gameplay
      */
     private function createWildBeast(): Gameplay
