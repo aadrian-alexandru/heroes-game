@@ -45,9 +45,7 @@ class Gameplay
         $this->createHero()
             ->createWildBeast()
             ->computeWhoStarts();
-
-        echo 'HERO Stats:' . PHP_EOL;
-        echo 'Health: ' . $this->hero->getHealth() . PHP_EOL;
+        $this->logStats();
     }
 
     /**
@@ -100,8 +98,9 @@ class Gameplay
     private function endBattle()
     {
         $this->computeAndSetWinner();
-        echo '------------------------------------------------' . PHP_EOL;
-        echo 'THE WINNER IS ' . $this->winner->getName() . '!';
+        echo '-----------------------------' . PHP_EOL;
+        echo 'THE WINNER IS ' . $this->winner->getName() . '!' . PHP_EOL;
+        $this->logStats();
     }
 
     /**
@@ -293,5 +292,27 @@ class Gameplay
             ->setLuck($luck);
 
         return $this;
+    }
+
+    /**
+     * Log Stats
+     */
+    private function logStats()
+    {
+        echo 'HERO Stats:' . PHP_EOL;
+        echo 'Health: ' . $this->hero->getHealth() . PHP_EOL;
+        echo 'Strength: ' . $this->hero->getStrength() . PHP_EOL;
+        echo 'Defense: ' . $this->hero->getDefense() . PHP_EOL;
+        echo 'Speed: ' . $this->hero->getSpeed() . PHP_EOL;
+        echo 'Luck: ' . $this->hero->getLuck() . PHP_EOL;
+        echo '-----------------------------' . PHP_EOL;
+
+        echo 'Wild Beast Stats:' . PHP_EOL;
+        echo 'Health: ' . $this->wildBeast->getHealth() . PHP_EOL;
+        echo 'Strength: ' . $this->wildBeast->getStrength() . PHP_EOL;
+        echo 'Defense: ' . $this->wildBeast->getDefense() . PHP_EOL;
+        echo 'Speed: ' . $this->wildBeast->getSpeed() . PHP_EOL;
+        echo 'Luck: ' . $this->wildBeast->getLuck() . PHP_EOL;
+        echo '-----------------------------' . PHP_EOL;
     }
 }
