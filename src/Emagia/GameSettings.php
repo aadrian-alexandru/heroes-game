@@ -7,8 +7,6 @@
  */
 
 namespace Emagia;
-use Emagia\Character\Skills\RapidStrikeSkill;
-
 
 /**
  * Class GameSettings
