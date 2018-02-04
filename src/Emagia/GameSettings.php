@@ -28,7 +28,7 @@ final class GameSettings
     const HERO_SPEED_RANGE = [40, 50];
     const HERO_LUCK_RANGE = [10, 30];
     const HERO_SKILLS = [
-        'RapidStrikeSkil1l' => 10,
+        'RapidStrikeSkill' => 10,
         'MagicShieldSkill' => 20
     ];
 

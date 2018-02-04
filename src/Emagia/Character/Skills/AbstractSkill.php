@@ -56,7 +56,7 @@ class AbstractSkill
      *
      * @return bool
      */
-    protected function wiillApply(): bool
+    public function wiillApply(): bool
     {
         return mt_rand(0, 99) < $this->getChanceToUse();
     }

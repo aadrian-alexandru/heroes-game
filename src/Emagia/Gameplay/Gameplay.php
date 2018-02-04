@@ -129,12 +129,13 @@ class Gameplay
         $attackSkills = $this->extractHeroSkillsByType(AbstractSkill::TYPE_ATTACK);
 
         foreach ($attackSkills as $skill) {
-            if ($skill instanceof AbstractSkill) {
+            if ($skill instanceof AbstractSkill && $skill->wiillApply()) {
                 $skill->apply($damage);
             }
         }
 
-        $this->wildBeast->setHealth($damage);
+        $newHealth = $this->wildBeast->getHealth() - $damage;
+        $this->wildBeast->setHealth($newHealth);
         $this->logAttack($damage, $this->wildBeast->getName());
     }
 
@@ -150,12 +151,13 @@ class Gameplay
         $defenseSkills = $this->extractHeroSkillsByType(AbstractSkill::TYPE_DEFENSE);
 
         foreach ($defenseSkills as $skill) {
-            if ($skill instanceof AbstractSkill) {
+            if ($skill instanceof AbstractSkill && $skill->wiillApply()) {
                 $skill->apply($damage);
             }
         }
 
-        $this->hero->setHealth($damage);
+        $newHealth = $this->hero->getHealth() - $damage;
+        $this->hero->setHealth($newHealth);
         $this->logAttack($damage, $this->hero->getName());
     }
 
