@@ -12,10 +12,6 @@ namespace Emagia\Character;
  * Class Character
  * @package Emagia\Character
  */
-/**
- * Class Character
- * @package Emagia\Character
- */
 class Character
 {
     /** @var string */
