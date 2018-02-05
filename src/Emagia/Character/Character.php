@@ -16,7 +16,7 @@ class Character
 {
     /** @var string */
     protected $name;
-    /** @var int */
+    /** @var float */
     protected $health;
     /** @var int */
     protected $strength;
@@ -45,18 +45,18 @@ class Character
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getHealth(): int
+    public function getHealth(): float
     {
         return $this->health;
     }
 
     /**
-     * @param int $health
+     * @param float $health
      * @return Character
      */
-    public function setHealth(int $health): Character
+    public function setHealth(float $health): Character
     {
         $this->health = $health;
         return $this;
