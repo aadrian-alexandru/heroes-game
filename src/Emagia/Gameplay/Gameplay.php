@@ -89,7 +89,7 @@ class Gameplay
 
             $this->endBattle();
         } catch (\Exception $e) {
-            // @todo: treat exception here (maybe log the errors)
+            $this->log($e->getMessage());
         }
     }
 
@@ -99,8 +99,8 @@ class Gameplay
     private function endBattle()
     {
         $this->computeAndSetWinner();
-        echo '-----------------------------' . PHP_EOL;
-        echo 'THE WINNER IS ' . $this->winner->getName() . '!' . PHP_EOL;
+        $this->log('-----------------------------' . PHP_EOL);
+        $this->log( 'THE WINNER IS ' . $this->winner->getName() . '!' . PHP_EOL);
         $this->logStats();
     }
 
@@ -183,7 +183,17 @@ class Gameplay
      */
     private function logAttack(int $damage, $defenderName)
     {
-        echo $defenderName . ' took ' . $damage . ' damage!' . PHP_EOL;
+        $this->log($defenderName . ' took ' . $damage . ' damage!' . PHP_EOL);
+    }
+
+    /**
+     * Log
+     *
+     * @param string $message
+     */
+    private function log(string $message)
+    {
+        echo $message;
     }
 
     /**
@@ -300,20 +310,20 @@ class Gameplay
      */
     private function logStats()
     {
-        echo 'HERO Stats:' . PHP_EOL;
-        echo 'Health: ' . $this->hero->getHealth() . PHP_EOL;
-        echo 'Strength: ' . $this->hero->getStrength() . PHP_EOL;
-        echo 'Defense: ' . $this->hero->getDefense() . PHP_EOL;
-        echo 'Speed: ' . $this->hero->getSpeed() . PHP_EOL;
-        echo 'Luck: ' . $this->hero->getLuck() . PHP_EOL;
-        echo '-----------------------------' . PHP_EOL;
+        $this->log('HERO Stats:' . PHP_EOL);
+        $this->log('Health: ' . $this->hero->getHealth() . PHP_EOL);
+        $this->log('Strength: ' . $this->hero->getStrength() . PHP_EOL);
+        $this->log('Defense: ' . $this->hero->getDefense() . PHP_EOL);
+        $this->log('Speed: ' . $this->hero->getSpeed() . PHP_EOL);
+        $this->log('Luck: ' . $this->hero->getLuck() . PHP_EOL);
+        $this->log('-----------------------------' . PHP_EOL);
 
-        echo 'Wild Beast Stats:' . PHP_EOL;
-        echo 'Health: ' . $this->wildBeast->getHealth() . PHP_EOL;
-        echo 'Strength: ' . $this->wildBeast->getStrength() . PHP_EOL;
-        echo 'Defense: ' . $this->wildBeast->getDefense() . PHP_EOL;
-        echo 'Speed: ' . $this->wildBeast->getSpeed() . PHP_EOL;
-        echo 'Luck: ' . $this->wildBeast->getLuck() . PHP_EOL;
-        echo '-----------------------------' . PHP_EOL;
+        $this->log('Wild Beast Stats:' . PHP_EOL);
+        $this->log('Health: ' . $this->wildBeast->getHealth() . PHP_EOL);
+        $this->log('Strength: ' . $this->wildBeast->getStrength() . PHP_EOL);
+        $this->log('Defense: ' . $this->wildBeast->getDefense() . PHP_EOL);
+        $this->log('Speed: ' . $this->wildBeast->getSpeed() . PHP_EOL);
+        $this->log('Luck: ' . $this->wildBeast->getLuck() . PHP_EOL);
+        $this->log('-----------------------------' . PHP_EOL);
     }
 }
