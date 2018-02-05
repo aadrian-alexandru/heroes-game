@@ -12,11 +12,11 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class CharacterTest
- * @package tests\Emagia\Character
+ * @package Tests\Emagia\Character
  */
 class CharacterTest extends TestCase
 {
-    const HERO_NAME = 'OrderusTest';
+    const CHARACTER_NAME = 'OrderusTest';
     /** @var Character */
     private $character;
 
@@ -25,7 +25,7 @@ class CharacterTest extends TestCase
      */
     public function setUp()
     {
-        $this->character = new Character(self::HERO_NAME);
+        $this->character = new Character(self::CHARACTER_NAME);
         $this->character
             ->setHealth(10)
             ->setStrength(20)
@@ -40,7 +40,7 @@ class CharacterTest extends TestCase
     public function testGetName()
     {
         $character = $this->character;
-        self::assertEquals(self::HERO_NAME, $character->getName());
+        self::assertEquals(self::CHARACTER_NAME, $character->getName());
     }
 
     /**
