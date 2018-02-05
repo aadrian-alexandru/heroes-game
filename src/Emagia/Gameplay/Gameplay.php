@@ -134,7 +134,7 @@ class Gameplay
 
         foreach ($attackSkills as $skill) {
             if ($skill instanceof AbstractSkill && $skill->wiillApply()) {
-                $skill->apply($damage);
+                $damage = $skill->apply($damage);
             }
         }
 
@@ -156,7 +156,7 @@ class Gameplay
 
         foreach ($defenseSkills as $skill) {
             if ($skill instanceof AbstractSkill && $skill->wiillApply()) {
-                $skill->apply($damage);
+                $damage = $skill->apply($damage);
             }
         }
 

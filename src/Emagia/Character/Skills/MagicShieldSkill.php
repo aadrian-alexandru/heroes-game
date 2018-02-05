@@ -32,10 +32,12 @@ class MagicShieldSkill extends AbstractSkill
     }
 
     /**
-     * @param int $damage
+     * @param float $damage
+     * @return float
      */
-    public function apply(int &$damage)
+    public function apply(float $damage): float
     {
         $damage = $damage / 2;
+        return $damage;
     }
 }
