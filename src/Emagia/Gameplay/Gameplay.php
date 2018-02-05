@@ -41,7 +41,7 @@ class Gameplay
     /**
      * Initialize Gameplay
      */
-    public function initialize()
+    private function initialize()
     {
         $this->createHero()
             ->createWildBeast()
@@ -77,6 +77,8 @@ class Gameplay
     public function startBattle()
     {
         try {
+            $this->initialize();
+
             while ($this->areBothCharactersAlive()) {
                 if ($this->isHerosTurn()) {
                     $this->runHeroAttacks();
@@ -100,7 +102,7 @@ class Gameplay
     {
         $this->computeAndSetWinner();
         $this->log('-----------------------------' . PHP_EOL);
-        $this->log( 'THE WINNER IS ' . $this->winner->getName() . '!' . PHP_EOL);
+        $this->log( 'THE WINNER IS ' . $this->getWinner()->getName() . '!' . PHP_EOL);
         $this->logStats();
     }
 

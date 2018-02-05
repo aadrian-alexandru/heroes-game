@@ -9,5 +9,4 @@
 require_once 'vendor/autoload.php';
 
 $gameplay = new \Emagia\Gameplay\Gameplay();
-$gameplay->initialize();
 $gameplay->startBattle();
