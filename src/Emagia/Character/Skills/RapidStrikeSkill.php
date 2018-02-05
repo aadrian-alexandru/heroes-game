@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: Adrian
  * Date: 29-Jan-18
  * Time: 21:49
  */
-
 namespace Emagia\Character\Skills;
 
 /**
