@@ -18,7 +18,7 @@ class CharacterTest extends TestCase
 {
     const CHARACTER_NAME = 'OrderusTest';
     /** @var Character */
-    private $character;
+    protected $character;
 
     /**
      * Set up
